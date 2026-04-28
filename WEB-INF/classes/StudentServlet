@@ -1,0 +1,50 @@
+import java.io.*;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+
+public class StudentServlet extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        out.println("<html><body style='font-family:Arial;'>");
+        out.println("<h2>Student Entry Form</h2>");
+
+        out.println("<form method='post'>");
+
+        out.println("Name: <input type='text' name='name'><br><br>");
+
+        out.println("Standard: ");
+        out.println("<select name='standard'>");
+        out.println("<option>1</option>");
+        out.println("<option>2</option>");
+        out.println("<option>3</option>");
+        out.println("<option>4</option>");
+        out.println("<option>5</option>");
+        out.println("</select><br><br>");
+
+        out.println("<input type='submit' value='Add'>");
+
+        out.println("</form>");
+        out.println("</body></html>");
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String name = request.getParameter("name");
+        String standard = request.getParameter("standard");
+
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        out.println("<html><body style='text-align:center;'>");
+        out.println("<h2>Data Saved Successfully</h2>");
+        out.println("<p>Name: " + name + "</p>");
+        out.println("<p>Standard: " + standard + "</p>");
+        out.println("</body></html>");
+    }
+}
