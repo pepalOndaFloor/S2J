@@ -1,0 +1,31 @@
+CREATE TABLE items ( 
+item_id INT PRIMARY KEY, 
+item_name VARCHAR(100), 
+price DECIMAL(10,2), 
+quantity INT 
+); 
+INSERT INTO items VALUES (101, 'Laptop', 55000.00, 5);
+INSERT INTO items VALUES (102, 'Mouse', 500.00, 50) ;
+INSERT INTO items VALUES (103, 'Keyboard', 1200.00, 30); 
+INSERT INTO items VALUES (104, 'Monitor', 15000.00, 10);
+
+select*from items;
+
+CREATE OR REPLACE FUNCTION check_item(p_item_id NUMBER)
+RETURN NUMBER
+IS
+    cnt NUMBER;
+BEGIN
+    SELECT COUNT(*)
+    INTO cnt
+    FROM items
+    WHERE item_id = p_item_id;
+
+    IF cnt > 0 THEN
+        RETURN 1;   -- Item exists
+    ELSE
+        RETURN 0;   -- Item does not exist
+    END IF;
+END;
+
+SELECT check_item(101) FROM DUAL;
