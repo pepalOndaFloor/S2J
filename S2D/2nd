@@ -1,0 +1,57 @@
+SQL Queries: 
+Create Table: 
+1. dept 
+CREATE TABLE dept(deptno INT PRIMARY KEY,dname VARCHAR(50),loc VARCHAR(30)); 
+2. emp 
+CREATE TABLE emp(empno INT PRIMARY KEY,ename VARCHAR(50),job varchar(25),mgr 
+varchar(10),hiredate DATE, sal DECIMAL(10,2), comm DECIMAL(7,2),deptno int, FOREIGN 
+ 
+KEY(deptno) REferences dept(deptno)); 
+ 
+Insert Data: 
+ 
+1. dept 
+INSERT INTO dept VALUES 
+    ('10', 'ACCOUNTING', 'NEW YORK'), 
+    ('20', 'RESEARCH', 'DALLAS'), 
+    ('30', 'SALES', 'CHICAGO'), 
+    ('40', 'OPERATIONS', 'BOSTON'); 
+ 
+2. emp 
+INSERT INTO emp VALUES 
+    ('7369','SMITH','CLERK','7902','1980-12-17',800,NULL,'20'), 
+    ('7499','ALLEN','SALESMAN','7698','1981-02-20',1600,300,'30'), 
+    ('7521','WARD','SALESMAN','7698','1981-02-22',1250,500,'30'), 
+    ('7566','JONES','MANAGER','7839','1981-04-02',2975,NULL,'20'), 
+    ('7654','MARTIN','SALESMAN','7698','1981-09-28',1250,1400,'30'), 
+    ('7698','BLAKE','MANAGER','7839','1981-05-01',2850,NULL,'30'), 
+    ('7782','CLARK','MANAGER','7839','1981-06-09',2450,NULL,'10'), 
+    ('7788','SCOTT','ANALYST','7566','1987-04-19',3000,NULL,'20'), 
+    ('7839','KING','PRESIDENT',NULL,'1981-11-17',5000,NULL,'10'), 
+    ('7844','TURNER','SALESMAN','7698','1981-09-08',1500,0,'30'), 
+    ('7876','ADAMS','CLERK','7788','1987-05-23',1100,NULL,'20'), 
+    ('7900','JAMES','CLERK','7698','1981-12-03',950,NULL,'30'), 
+    ('7902','FORD','ANALYST','7566','1981-12-03',3000,NULL,'20'), 
+    ('7934','MILLER','CLERK','7782','1982-01-23',1300,NULL,'10'); 
+
+    a) Insert into dept values(50,'PERSONNEL','BOSTON'); 
+b) UPDATE emp set ename='HERALD',hiredate='1992/09/05' ,empno='7999'where ename='TURNER';
+
+) DELETE from emp where job='Computer Programmar'; 
+d) select ename,hiredate, TIMESTAMPDIFF(YEAR,hiredate,CURDATE())as  years from emp;
+
+select ename,hiredate, TIMESTAMPDIFF(YEAR,hiredate,CURDATE())as  years from emp where 
+hiredate=(SELECT MIN(hiredate) from emp) or hiredate=(SELECT MAX(hiredate) from emp)
+
+f) select d.deptno,d.dname, count(*) as total from emp e join dept d on e.deptno=d.deptno group by 
+d.deptno,d.dname order by total desc limit 1; 
+
+g) SELECT * from emp where ename like"s%";
+
+h) select DAYNAME(hiredate) as day,time(hiredate)as time, monthname(hiredate)as month,year(hiredate) 
+DIV 100+1 as century from emp where ename="SMITH";
+
+i) select empno,ename,job,hiredate,sal from emp where comm>(sal*0.07);
+
+j) select e.ename ,d.dname from emp e join dept d on e.deptno=d.deptno where d.dname='SALES' OR 
+d.dname='RESEARCH'; 
