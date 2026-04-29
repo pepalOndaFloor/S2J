@@ -1,0 +1,94 @@
+-- 1. Create Main Table
+CREATE TABLE Client_master (
+    client_id NUMBER PRIMARY KEY,
+    client_name VARCHAR2(100),
+    city VARCHAR2(50),
+    email VARCHAR2(100)
+);
+
+
+-- Insert Data
+INSERT ALL
+    INTO Client_master VALUES (1, 'Amit Sharma', 'Nagpur', 'amit@gmail.com')
+    INTO Client_master VALUES (2, 'Ravi Patel', 'Mumbai', 'ravi@gmail.com')
+    INTO Client_master VALUES (3, 'Sneha Joshi', 'Pune', 'sneha@gmail.com')
+SELECT * FROM dual;
+
+
+
+-- 2. Create Audit Table
+CREATE TABLE Client_master_audit (
+    audit_id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    client_id NUMBER,
+    client_name VARCHAR2(100),
+    city VARCHAR2(50),
+    email VARCHAR2(100),
+    operation_type VARCHAR2(10),
+    operation_time DATE
+);
+
+
+
+-- 3. Trigger for UPDATE
+CREATE OR REPLACE TRIGGER trg_client_update
+BEFORE UPDATE ON Client_master
+FOR EACH ROW
+BEGIN
+    INSERT INTO Client_master_audit (
+        client_id,
+        client_name,
+        city,
+        email,
+        operation_type,
+        operation_time
+    )
+    VALUES (
+        :OLD.client_id,
+        :OLD.client_name,
+        :OLD.city,
+        :OLD.email,
+        'UPDATE',
+        SYSDATE
+    );
+END;
+/
+
+-- 4. Trigger for DELETE
+CREATE OR REPLACE TRIGGER trg_client_delete
+BEFORE DELETE ON Client_master
+FOR EACH ROW
+BEGIN
+    INSERT INTO Client_master_audit (
+        client_id,
+        client_name,
+        city,
+        email,
+        operation_type,
+        operation_time
+    )
+    VALUES (
+        :OLD.client_id,
+        :OLD.client_name,
+        :OLD.city,
+        :OLD.email,
+        'DELETE',
+        SYSDATE
+    );
+END;
+/
+
+-- 5. Test UPDATE
+UPDATE Client_master
+SET city = 'Delhi'
+WHERE client_id = 1;
+
+
+-- 6. Test DELETE
+DELETE FROM Client_master
+WHERE client_id = 2;
+
+
+COMMIT;
+
+-- 7. Check Audit Table
+SELECT * FROM Client_master_audit;
