@@ -1,0 +1,13 @@
+CREATE TABLE customer (cust_id INT PRIMARY KEY, cust_name VARCHAR(100), address VARCHAR(200),salary DECIMAL(10,2)); 
+
+INSERT INTO customer VALUES (1,'Amit Sharma', 'Pune', 25000), 
+INSERT INTO customer VALUES (2,'Neha Patil', 'Mumbai', 30000);
+INSERT INTO customer VALUES (3,'Rahul Verma', 'Delhi', 28000);
+
+select*from customer;
+
+UPDATE CUSTOMER
+SET salary = salary + 5000;
+
+SELECT cust_name, address
+FROM CUSTOMER;
