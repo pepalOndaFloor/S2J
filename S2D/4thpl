@@ -1,0 +1,11 @@
+
+DECLARE
+    age NUMBER := 20;
+BEGIN
+    IF age >= 18 THEN
+        DBMS_OUTPUT.PUT_LINE('Eligible for voting');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Not eligible for voting');
+    END IF;
+END;
+/
