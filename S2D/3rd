@@ -1,0 +1,19 @@
+// references 2nd 
+a) select d.dname from emp e join dept d on e.deptno=d.deptno group by d.deptno ,d.dname having 
+count(*)>3
+
+b) select concat(empno,' ',ename,' ',mgr) as details from emp;
+
+c) select e.ename,d.loc,d.dname from emp e join dept d on e.deptno=d.deptno
+
+d) select e.ename,e.sal ,d.loc from emp e join dept d on e.deptno=d.deptno where d.loc='Chicago';
+
+e) select distinct e.empno,e.ename,e.job,e.mgr,m.job as manager_job from emp e left join emp m on 
+e.mgr=m.mgr; 
+
+f) select mgr,ename,count(*) as total from emp where mgr is not null group by mgr order by total desc limit 
+1;
+
+g) create view emps as select e.empno,e.ename,e.sal,e.deptno,d.dname from emp e join dept d on 
+e.deptno=d.deptno; 
+select * from emps;
